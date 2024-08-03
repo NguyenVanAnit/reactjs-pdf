@@ -36,25 +36,60 @@ const PdfViewer = () => {
         <div>
             <input type="file" accept=".pdf" onChange={fileUpload}/>
 
+            <div style={{display: 'flex', flex: '1'}}>
+                <div style={{marginRight: '100px'}}>
+                {
+                    pdfData && (
+                        <div>
+                            <Document file={pdfData} onLoadSuccess={uploadNumberPages}>
+                                <Page pageNumber={pageNumber}></Page>
+                            {/* {Array.from(
+                                new Array(numPages),
+                                (el, index) => (
+                                <Page
+                                    key={`page_${index + 1}`}
+                                    pageNumber={index + 1}
+                                />
+                                ),
+                            )} */}
+                            
+                            </Document>
+                        </div>
+                    )
+                }      
+                </div>
+                <div>
+                {
+                    pdfData && (
+                        <div>
+                            <Document file={pdfData} onLoadSuccess={uploadNumberPages}>
+                                <Page pageNumber={pageNumber}></Page>
+                                {/*     {Array.from(
+                                    new Array(numPages),
+                                    (el, index) => (
+                                    <Page
+                                        key={`page_${index + 1}`}
+                                        pageNumber={index + 1}
+                                    />
+                                    ),
+                                )} */}
+                            </Document>
+                        </div>
+                    )
+                }
+                </div>
+            </div>
             {
                 pdfData && (
-                    <Document file={pdfData} onLoadSuccess={uploadNumberPages}>
-                        {/* <Page pageNumber={pageNumber}></Page> */}
-                        {Array.from(
-                            new Array(numPages),
-                            (el, index) => (
-                            <Page
-                                key={`page_${index + 1}`}
-                                pageNumber={index + 1}
-                            />
-                            ),
-                        )}
-                    </Document>
-                )
-            }            
-            {
-                pdfData && (
-                    <p>Page {pageNumber} of {numPages}</p>
+                    <div>
+                        <p>Page {pageNumber} of {numPages}</p>
+                        <button onClick={() => setPageNumber((prevPage) => Math.max(prevPage - 1, 1))}>
+                            Trang trước
+                        </button>
+                        <button onClick={() => setPageNumber((prevPage) => Math.min(prevPage + 1, numPages))}>
+                            Trang sau
+                        </button>
+                    </div>
                 )
             }
         </div>
